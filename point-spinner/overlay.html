@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Point Spinner Overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/shared.css?v=2" />
+<link rel="stylesheet" href="css/overlay.css?v=2" />
+</head>
+<body>
+  <div id="stage">
+    <div id="frame">
+      <div id="item-slot" class="item-slot">
+        <img id="item-image" class="item-image" alt="" />
+      </div>
+
+      <div id="item-text" class="item-text">
+        <div id="item-name" class="item-name"></div>
+        <div id="item-qty" class="item-qty"></div>
+      </div>
+
+      <div id="name-bar" class="name-bar">
+        <div id="participant-name" class="participant-name">Ketik !spin di chat!</div>
+      </div>
+
+      <img class="frame-art" src="assets/frame/boxspinner.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div id="empty-message" class="empty-message">Menunggu item ditambahkan dari Control Panel…</div>
+    <div id="conn-status" class="conn-status" hidden>Menghubungkan ke server…</div>
+  </div>
+
+  <script src="js/client.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/overlay.js"></script>
+</body>
+</html>

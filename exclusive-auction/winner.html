@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Exclusive Auction Winner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="css/shared.css?v=2" />
+<link rel="stylesheet" href="css/winner.css?v=1" />
+</head>
+<body>
+  <div id="stage">
+    <div id="winner-card" class="winner-card">
+      <div class="winner-badge">PEMENANG AUCTION</div>
+      <div class="winner-image-wrap">
+        <img id="winner-image" class="winner-image" alt="" hidden />
+      </div>
+      <div id="winner-item-name" class="winner-item-name"></div>
+      <div class="winner-row">
+        <span class="winner-row-label">Dimenangkan oleh</span>
+        <span id="winner-name" class="winner-row-value winner-row-value--name"></span>
+      </div>
+      <div class="winner-price">
+        <span id="winner-price-value"></span>
+        <span class="winner-price-unit">Premium Points</span>
+      </div>
+    </div>
+    <div id="conn-status" class="conn-status" hidden>Tidak terhubung ke server…</div>
+  </div>
+
+  <script src="js/confetti.js?v=1"></script>
+  <script src="js/winner.js?v=1"></script>
+</body>
+</html>

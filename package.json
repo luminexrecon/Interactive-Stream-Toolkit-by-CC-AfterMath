@@ -1,0 +1,15 @@
+{
+  "name": "stream-toolkit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted OBS overlay toolkit for YouTube live streams: a viewer-triggered prize spinner and two live-chat currency auctions, synced in real time over WebSocket. Runs entirely on your own PC alongside OBS.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "googleapis": "^144.0.0",
+    "ws": "^8.18.0"
+  }
+}

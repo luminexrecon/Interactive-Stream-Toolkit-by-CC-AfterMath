@@ -1,0 +1,143 @@
+html,
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mascot (idle/spinning) and the winner card occupy the same centered spot
+   -- the card is taken out of flex flow so it can overlap the mascot
+   instead of pushing it aside while both fade in/out. */
+
+.mascot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mascot.hidden {
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+}
+
+.mascot img {
+  width: 160px;
+  height: 160px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5));
+}
+
+.winner-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 64px;
+  background: linear-gradient(180deg, rgba(20, 22, 30, 0.94), rgba(10, 11, 16, 0.94));
+  border: 3px solid var(--accent);
+  border-radius: 28px;
+  box-shadow: 0 0 60px rgba(226, 178, 77, 0.55), 0 20px 60px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7) translateY(20px);
+  transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.2, 1.6, 0.35, 1);
+  pointer-events: none;
+}
+
+.winner-card.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) translateY(0);
+}
+
+.winner-badge {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: #1a1206;
+  background: linear-gradient(180deg, #f0cd7a, var(--accent));
+  padding: 6px 24px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.winner-image-wrap {
+  width: 260px;
+  height: 260px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid rgba(226, 178, 77, 0.6);
+  box-shadow: 0 0 40px rgba(226, 178, 77, 0.5);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.winner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.winner-name {
+  font-size: 46px;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.15;
+  text-shadow: 0 0 16px rgba(226, 178, 77, 0.8), 0 3px 6px rgba(0, 0, 0, 0.9);
+  max-width: 640px;
+}
+
+.winner-qty {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1206;
+  background: linear-gradient(180deg, #f0cd7a, var(--accent));
+  padding: 6px 24px;
+  border-radius: 999px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+.winner-participant {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: -4px;
+}
+
+.winner-participant .who {
+  color: #ffffff;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(226, 178, 77, 0.7);
+}
+
+.winner-participant[hidden] {
+  display: none;
+}
+
+#conn-status {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 14px;
+  background: var(--panel-bg);
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff8a8a;
+}

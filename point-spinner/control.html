@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Point Spinner Control Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/shared.css?v=2" />
+<link rel="stylesheet" href="css/control.css?v=2" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Point Spinner Control Panel</h1>
+    <div id="conn-status" class="conn-status" hidden>Tidak terhubung ke server…</div>
+  </header>
+
+  <main class="app-main">
+
+    <section class="panel">
+      <h2>Tambah / Edit Item</h2>
+      <form id="item-form" class="item-form">
+        <div class="field">
+          <label for="item-name">Nama Item</label>
+          <input type="text" id="item-name" placeholder="Contoh: Gold" required />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="item-qty">Qty</label>
+            <input type="number" id="item-qty" min="0" step="1" value="1" />
+          </div>
+          <div class="field">
+            <label for="item-qty-format">Format Qty</label>
+            <input type="text" id="item-qty-format" list="qty-format-suggestions" placeholder="2T / pcs / box" />
+            <datalist id="qty-format-suggestions">
+              <option value="pcs"></option>
+              <option value="box"></option>
+              <option value="stack"></option>
+              <option value="pack"></option>
+              <option value="T"></option>
+              <option value="M"></option>
+              <option value="K"></option>
+            </datalist>
+          </div>
+          <div class="field">
+            <label for="item-weight">Bobot (peluang)</label>
+            <input type="number" id="item-weight" min="0" step="any" value="1" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Gambar (otomatis di-crop ke 540x540px)</label>
+          <div class="image-picker">
+            <label class="btn btn-secondary file-btn">
+              Pilih Gambar
+              <input type="file" id="item-image" accept="image/*" hidden />
+            </label>
+            <img id="item-image-preview" class="image-preview" hidden alt="Preview" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="item-submit-btn" class="btn btn-primary">Tambah Item</button>
+          <button type="button" id="item-cancel-btn" class="btn btn-ghost" hidden>Batal Edit</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Daftar Item</h2>
+      <div id="item-list" class="item-list"></div>
+      <p id="item-empty-hint" class="empty-hint">Belum ada item. Tambahkan lewat form di atas.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Import Cepat Item</h2>
+      <p class="panel-hint">Satu item per baris, format: <code>Nama;Qty;Format</code>. Gambar ditambahkan belakangan lewat Edit.</p>
+      <textarea id="import-textarea" class="import-textarea" rows="4" placeholder="Gold;2;T&#10;Diamond;500;pcs"></textarea>
+      <button type="button" id="import-btn" class="btn btn-secondary">Import</button>
+    </section>
+
+    <section class="panel">
+      <h2>Ekonomi Poin (Bot Live Chat)</h2>
+      <p class="panel-hint">Dipakai oleh bot YouTube (folder <code>youtube-bot/</code>) untuk menghitung poin dari chat &amp; biaya tiap <code>!spin</code>. Viewer memicu spin dari chat, bukan dari tombol di bawah.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="setting-points-per-message">Poin per pesan chat</label>
+          <input type="number" id="setting-points-per-message" min="0" step="1" value="1" />
+        </div>
+        <div class="field">
+          <label for="setting-cooldown-seconds">Cooldown (detik)</label>
+          <input type="number" id="setting-cooldown-seconds" min="0" step="1" value="15" />
+        </div>
+        <div class="field">
+          <label for="setting-spin-cost">Biaya 1x spin (poin)</label>
+          <input type="number" id="setting-spin-cost" min="1" step="1" value="10" />
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Pengaturan</h2>
+      <label class="checkbox-row">
+        <input type="checkbox" id="setting-remove-after-win" />
+        Hapus item dari daftar setelah menang
+      </label>
+    </section>
+
+    <section class="panel panel-spin">
+      <h2>Kontrol Spin</h2>
+      <button type="button" id="spin-btn" class="btn btn-spin">SPIN (Tes Manual)</button>
+      <p id="spin-status-text" class="spin-status"></p>
+      <p class="panel-hint">Tombol ini cuma buat tes tampilan overlay — spin sungguhan dari viewer jalan otomatis lewat bot begitu mereka ketik <code>!spin</code>.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header-row">
+        <h2>Riwayat</h2>
+        <button type="button" id="clear-history-btn" class="btn btn-ghost btn-small">Bersihkan Riwayat</button>
+      </div>
+      <div id="history-list" class="history-list"></div>
+      <p id="history-empty-hint" class="empty-hint">Belum ada riwayat spin.</p>
+    </section>
+
+  </main>
+
+  <script src="js/client.js"></script>
+  <script src="js/control.js?v=2"></script>
+</body>
+</html>

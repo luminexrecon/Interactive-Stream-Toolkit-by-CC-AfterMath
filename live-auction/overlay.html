@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Live Auction Overlay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" />
+<link rel="stylesheet" href="css/shared.css?v=2" />
+<link rel="stylesheet" href="css/overlay.css?v=3" />
+</head>
+<body>
+  <div id="stage" class="empty">
+    <div id="frame">
+      <div id="frame-media">
+        <img id="item-image" class="item-image" alt="" hidden />
+      </div>
+      <div id="frame-content">
+        <div id="frame-top">
+          <div id="item-name" class="item-name"></div>
+          <div id="time-left" class="time-left"></div>
+        </div>
+        <div class="row row--hero">
+          <div class="row-label">Bid tertinggi</div>
+          <div id="current-bid" class="row-value row-value--accent"></div>
+        </div>
+        <div class="row">
+          <div class="row-label">Oleh</div>
+          <div id="current-bidder" class="row-value"></div>
+        </div>
+        <div class="row-pair">
+          <div class="row">
+            <div class="row-label">Min. selanjutnya</div>
+            <div id="min-next-bid" class="row-value"></div>
+          </div>
+          <div id="entry-fee-row" class="row" hidden>
+            <div class="row-label">Biaya join (!joinbid)</div>
+            <div id="entry-fee" class="row-value"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="empty-message" class="empty-message">Belum ada auction aktif.</div>
+  </div>
+
+  <script src="js/overlay.js?v=3"></script>
+</body>
+</html>

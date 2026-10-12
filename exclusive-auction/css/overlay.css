@@ -1,0 +1,222 @@
+html,
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Landscape card: image left, info right -- dark surface (matches the
+   control panel's redesigned palette) instead of the gold boxspinnerbg.png
+   frame, which made accent-colored text (bid amount) hard to read against
+   an equally-gold background. Accent is now used selectively (hero number,
+   top border, timer) rather than as a full-panel wash. */
+/* Fixed pixel footprint, NOT vw-relative -- this overlay is meant to be a
+   compact corner element in OBS, and the Browser Source canvas is usually
+   sized close to the overlay's own footprint (not the full 1920px stream
+   canvas). A vw-based width broke badly at those realistic narrow widths:
+   the image stretched into a tall sliver instead of staying square, and
+   text truncated into "Camel...", "100 ...". Fixed px keeps this element's
+   own proportions predictable regardless of how the Browser Source is
+   sized -- the admin sizes the source TO the card, not the other way
+   around. */
+#frame {
+  position: relative;
+  width: 440px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  background: linear-gradient(180deg, #1c1e27 0%, #15161d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 3px solid var(--accent);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+#frame-media {
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+  margin: 14px 0 14px 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0d0e13;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#frame-media:has(.item-image[hidden]) {
+  display: none;
+}
+
+#frame-content {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#frame-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 2px;
+}
+
+.item-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+  color: #ffffff;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.time-left {
+  position: relative;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+  background: rgba(226, 178, 77, 0.12);
+  border: 1px solid rgba(226, 178, 77, 0.35);
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-top: 2px;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+/* Floating "+30s" that appears next to the timer badge on every
+   anti-snipe extension, then drifts up and fades -- makes an otherwise
+   invisible server-side rule (every accepted bid pushes endsAt back 30s)
+   legible to viewers instead of just a timer that silently jumps. */
+.extension-badge {
+  position: absolute;
+  top: -2px;
+  left: 100%;
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6fd38a;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: extension-float 0.9s ease-out forwards;
+}
+
+@keyframes extension-float {
+  0% { opacity: 0; transform: translateY(2px); }
+  20% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-14px); }
+}
+
+/* Bid number pulse -- a quick scale "pop" on the hero number itself,
+   independent of the count-up tween (which changes the digits; this
+   changes the size), so a bid landing reads as a tactile hit. */
+@keyframes bid-pulse {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+
+.row-value--accent.bid-pulse {
+  display: inline-block;
+  animation: bid-pulse 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Label stacked ABOVE the value (not side-by-side) -- this is the one
+   number that can legitimately run long ("1500 Premium Points (harga awal)"), and
+   fighting it onto one row with its own label was the root cause of the
+   "100 ..." truncation at real/narrow OBS widths. */
+.row--hero {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 2px 0 10px;
+  border-bottom: none;
+}
+
+.row-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.row-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.row-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: right;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.row--hero .row-label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.row-value--accent {
+  color: var(--accent);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.empty-message {
+  display: none;
+  color: var(--text-dim);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 24px;
+  background: var(--panel-bg);
+  border: 1px dashed var(--panel-border);
+  border-radius: 12px;
+}
+
+#stage.empty #frame {
+  display: none;
+}
+
+#stage.empty .empty-message {
+  display: block;
+}

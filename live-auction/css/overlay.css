@@ -1,0 +1,173 @@
+html,
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Landscape card: image left, info right -- matches exclusive-auction's
+   redesigned overlay (same component, different currency). Fixed pixel
+   footprint, NOT vw-relative -- OBS Browser Source is usually sized close
+   to the overlay's own footprint (not the full 1920px stream canvas), and
+   a vw-based width breaks badly at those realistic narrow widths (image
+   stretches into a sliver, text truncates). */
+#frame {
+  position: relative;
+  width: 440px;
+  display: flex;
+  align-items: flex-start;
+  background: linear-gradient(180deg, #1c1e27 0%, #15161d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 3px solid var(--accent);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+#frame-media {
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+  margin: 14px 0 14px 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0d0e13;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#frame-media:has(.item-image[hidden]) {
+  display: none;
+}
+
+#frame-content {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#frame-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 2px;
+}
+
+.item-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+  color: #ffffff;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.time-left {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+  background: rgba(226, 178, 77, 0.12);
+  border: 1px solid rgba(226, 178, 77, 0.35);
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-top: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Label stacked ABOVE the value (not side-by-side) -- the hero bid number
+   can legitimately run long ("1500 Points (harga awal)"), and fighting
+   it onto one row with its own label truncates badly at narrow widths. */
+.row--hero {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 2px 0 10px;
+  border-bottom: none;
+}
+
+.row-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.row-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.row--hero .row-label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.row-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: right;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.row-value--accent {
+  color: var(--accent);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.empty-message {
+  display: none;
+  color: var(--text-dim);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 24px;
+  background: var(--panel-bg);
+  border: 1px dashed var(--panel-border);
+  border-radius: 12px;
+}
+
+#stage.empty #frame {
+  display: none;
+}
+
+#stage.empty .empty-message {
+  display: block;
+}

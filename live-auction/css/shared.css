@@ -1,0 +1,59 @@
+/* Reset + shared tokens for both the overlay and the control panel. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: 'Outfit', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Author `display` rules above (and elsewhere) would otherwise beat the
+   browser's built-in `[hidden] { display: none }` UA rule, since author
+   stylesheets always win over UA stylesheets regardless of specificity. */
+[hidden] {
+  display: none !important;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.conn-status {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff8a8a;
+}
+
+:root {
+  --accent: #e2b24d;
+  --accent-soft: #e2b24d1a;
+  --accent-2: #ff6b6b;
+  --panel-bg: rgba(15, 17, 24, 0.82);
+  --panel-bg-solid: #0f1118;
+  --panel-border: rgba(226, 178, 77, 0.4);
+  --text-main: #f5f6fa;
+  --text-dim: #a7acba;
+  --text-faint: #686d7d;
+}

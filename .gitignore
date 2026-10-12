@@ -1,0 +1,12 @@
+node_modules/
+
+# Runtime state (balances, auction state, item lists, spin history) and
+# uploaded images -- generated at runtime, not part of the source.
+data/
+uploads/
+
+# Secrets -- your .env, Google OAuth client credentials, and the OAuth
+# tokens authorize.js generates. Never commit any of these.
+.env
+bot/client_secret.json
+bot/tokens/

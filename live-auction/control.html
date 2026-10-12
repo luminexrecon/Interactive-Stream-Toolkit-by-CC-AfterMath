@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Live Auction Control Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="css/shared.css?v=2" />
+<link rel="stylesheet" href="css/control.css?v=3" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Live Auction Control Panel</h1>
+    <div id="conn-status" class="conn-status" hidden>Tidak terhubung ke server…</div>
+  </header>
+
+  <main class="app-main">
+
+    <section class="panel">
+      <h2>Mulai Auction Baru</h2>
+      <p class="panel-hint">Cuma bisa 1 auction aktif dalam satu waktu. Penonton wajib <code>!joinbid</code> dulu (bayar biaya entry, sekali per auction) sebelum bisa <code>!bid</code> di live chat YouTube (pakai saldo Points).</p>
+      <form id="auction-form" class="auction-form">
+        <div class="field">
+          <label for="item-name">Nama Item</label>
+          <input type="text" id="item-name" placeholder="Contoh: Set Cruel Polos" required />
+        </div>
+        <div class="field">
+          <label>Gambar (opsional, otomatis di-crop ke 540x540px)</label>
+          <div class="image-picker">
+            <label class="btn btn-secondary file-btn">
+              Pilih Gambar
+              <input type="file" id="item-picture" accept="image/*" hidden />
+            </label>
+            <img id="item-picture-preview" class="image-preview" hidden alt="Preview" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="starting-price">Harga Awal (Points)</label>
+            <input type="number" id="starting-price" min="1" step="1" value="100" required />
+          </div>
+          <div class="field">
+            <label for="duration-minutes">Durasi (menit)</label>
+            <input type="number" id="duration-minutes" min="1" step="1" value="10" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="entry-fee">Biaya Entry (Points, 0 = gratis join)</label>
+          <input type="number" id="entry-fee" min="0" step="1" value="0" required />
+        </div>
+        <div class="form-actions">
+          <button type="submit" id="start-btn" class="btn btn-primary">Mulai Auction</button>
+        </div>
+        <p id="form-status-text" class="form-status"></p>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Status Saat Ini</h2>
+      <div id="status-active" class="status-box" hidden>
+        <div class="status-item-name" id="status-item-name"></div>
+        <div class="status-row">Biaya entry: <strong id="status-entry-fee"></strong></div>
+        <div class="status-row">Sudah join: <strong id="status-joined-count"></strong></div>
+        <div class="status-row">Bid tertinggi: <strong id="status-current-bid"></strong></div>
+        <div class="status-row">Bid selanjutnya minimal: <strong id="status-min-next"></strong></div>
+        <div class="status-row">Sisa waktu: <strong id="status-time-left"></strong></div>
+        <button type="button" id="close-now-btn" class="btn btn-danger">Tutup Sekarang</button>
+      </div>
+      <p id="status-empty-hint" class="empty-hint">Belum ada auction aktif.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Riwayat Auction</h2>
+      <p class="panel-hint">Cuma hasil akhir yang disimpan (item, pemenang, harga final) -- bukan riwayat tiap bid.</p>
+      <div id="auction-history-list" class="history-list"></div>
+      <p id="auction-history-empty-hint" class="empty-hint">Belum ada auction yang selesai.</p>
+    </section>
+
+  </main>
+
+  <script src="js/client.js?v=3"></script>
+  <script src="js/control.js?v=4"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<title>Point Spinner Winner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/shared.css?v=2" />
+<link rel="stylesheet" href="css/winner.css?v=2" />
+</head>
+<body>
+  <div id="stage">
+    <div id="mascot" class="mascot">
+      <img id="mascot-img" src="assets/emote/bling.gif" alt="" />
+    </div>
+
+    <div id="winner-card" class="winner-card">
+      <div class="winner-badge">PEMENANG!</div>
+      <div class="winner-image-wrap">
+        <img id="winner-image" class="winner-image" alt="" />
+      </div>
+      <div id="winner-name" class="winner-name"></div>
+      <div id="winner-qty" class="winner-qty"></div>
+      <div id="winner-participant" class="winner-participant"></div>
+    </div>
+
+    <div id="conn-status" class="conn-status" hidden>Menghubungkan ke server…</div>
+  </div>
+
+  <script src="js/client.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/winner.js"></script>
+</body>
+</html>

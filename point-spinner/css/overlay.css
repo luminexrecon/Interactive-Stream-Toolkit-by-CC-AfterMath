@@ -1,0 +1,166 @@
+html,
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Frame (boxspinner.png bezel over boxspinnerbg.png, same canvas) ----
+   boxspinner.png is 3054x1595. Its two transparent cutouts were measured by
+   sampling the PNG's alpha channel directly:
+     - item image slot: x 141-652,  y 641-1152  -> 4.617% / 40.188% / 16.732% / 32.038%
+     - participant bar: x 99-2953,  y 1298-1532 -> 3.241% / 81.379% / 93.451% / 14.671%
+   The purple "Giveaway Contents" area is opaque (baked into boxspinner.png),
+   so item-text is layered ON TOP of the frame-art instead of showing through
+   a cutout. */
+
+#frame {
+  position: relative;
+  width: min(96vw, 1450px);
+  aspect-ratio: 3054 / 1595;
+  background-image: url('../assets/frame/boxspinnerbg.png');
+  background-size: 100% 100%;
+}
+
+.frame-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---- Item image slot (swaps in place, no scrolling) --------------------- */
+
+.item-slot {
+  position: absolute;
+  left: 4.617%;
+  top: 40.188%;
+  width: 16.732%;
+  height: 32.038%;
+  overflow: hidden;
+  border-radius: 6px;
+  transition: box-shadow 0.25s ease;
+}
+
+.item-slot--won {
+  box-shadow: 0 0 0 4px var(--accent), 0 0 30px 8px rgba(226, 178, 77, 0.8);
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- Item name + qty text (overlaid on the opaque purple area) ---------- */
+
+.item-text {
+  position: absolute;
+  left: 23.5%;
+  top: 40.188%;
+  width: 72%;
+  height: 32.038%;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0 1.5%;
+  overflow: hidden;
+}
+
+.item-name {
+  font-size: 34px;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(226, 178, 77, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
+  line-height: 1.15;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.item-qty {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* ---- Participant name bar ------------------------------------------------ */
+
+.name-bar {
+  position: absolute;
+  left: 3.241%;
+  top: 81.379%;
+  width: 93.451%;
+  height: 14.671%;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: box-shadow 0.25s ease;
+}
+
+.name-bar--won {
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.85), 0 0 26px 6px rgba(226, 178, 77, 0.75);
+}
+
+.participant-name {
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 96%;
+}
+
+/* ---- Empty state / connection status ------------------------------------- */
+
+#conn-status {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 14px;
+  background: var(--panel-bg);
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  border-radius: 999px;
+}
+
+.empty-message {
+  display: none;
+  color: var(--text-dim);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 24px;
+  background: var(--panel-bg);
+  border: 1px dashed var(--panel-border);
+  border-radius: 12px;
+}
+
+#stage.empty #frame {
+  display: none;
+}
+
+#stage.empty .empty-message {
+  display: block;
+}
