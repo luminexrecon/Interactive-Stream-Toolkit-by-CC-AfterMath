@@ -2,6 +2,7 @@
 
 ### Interactive Point Spinner
 <img width="1335" height="740" alt="image" src="https://github.com/user-attachments/assets/fef49ddf-c021-4e4f-94ea-7462e73ef60f" />
+
 ### Live Auction
 <img width="1333" height="737" alt="image" src="https://github.com/user-attachments/assets/afce8e59-f353-4719-92f3-5d1e611f7b1e" />
 SC : [Youtube [CC]AfterMath](https://youtube.com/@aftermathaoe)
