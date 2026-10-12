@@ -5,7 +5,8 @@
 
 ### Live Auction
 <img width="1333" height="737" alt="image" src="https://github.com/user-attachments/assets/afce8e59-f353-4719-92f3-5d1e611f7b1e" />
-SC : [Youtube AfterMath](https://youtube.com/@aftermathaoe)
+
+SC : [YT AfterMath](https://youtube.com/@aftermathaoe)
 
 # INSTRUKSI BERBAHASA INDONESIA
 
