@@ -1,4 +1,91 @@
-Support this little streamer :D [Donate here](https://sociabuzz.com/aftermathaoe/tribe)
+## Support Streamer Kecil ini | Support this little streamer :D [Donate here](https://sociabuzz.com/aftermathaoe/tribe)
+
+# INDONESIA
+
+# Stream Toolkit
+
+Kumpulan overlay OBS yang bisa kamu jalankan sendiri buat live stream YouTube: spinner hadiah yang dipicu penonton, plus dua auction pakai currency dari live chat. Semuanya tetap sinkron real-time antara tab Control Panel kamu dan Browser Source OBS lewat WebSocket. Tanpa layanan eksternal, tanpa database, tanpa build step — cuma Node.js polos + file JSON lokal, jalan sepenuhnya di PC kamu sendiri bareng OBS.
+
+## Apa aja yang ada di dalamnya
+
+1. **Point Spinner** — penonton dapat currency (default-nya `Points`, bisa kamu ganti namanya — lihat [docs/CONFIGURATION.md](docs/CONFIGURATION.md)) cuma dengan chatting, terus mereka pakai buat `!spin` buat menangin hadiah random dari daftar yang kamu atur. Putarannya tampil live di overlay OBS.
+2. **Live Auction** — auction yang jalan sepenuhnya lewat live chat YouTube (`!joinbid`, `!bid`), harganya pakai currency yang sama dengan Point Spinner. Cuma satu auction aktif dalam satu waktu; kalau ke-outbid, uangnya langsung dikembalikan penuh.
+3. **Exclusive Auction** — auction kedua yang independen, pakai currency *kedua* (default-nya `Premium Points`) yang nggak pernah didapat otomatis — moderator harus kasih manual lewat `!give`. Currency ini juga susut sekian persen tiap bulan (bisa kamu atur persennya). Ada juga test panel buat latihan jalanin auction pakai bidder dummy, tanpa perlu live stream beneran.
+
+Tiap fitur itu folder yang berdiri sendiri: `control.html` (panel admin yang kamu buka di tab browser biasa), `overlay.html` (yang kamu tambahkan ke OBS sebagai Browser Source), dan kadang `winner.html` (Browser Source terpisah buat pengumuman pemenang, durasinya ~3 menit).
+
+## Semuanya jalan lokal
+
+Toolkit ini bukan layanan yang perlu di-hosting — nggak ada server yang perlu di-deploy, nggak perlu domain, nggak perlu setup HTTPS. Kamu jalanin persis seperti kamu jalanin OBS sendiri:
+
+- `server.js` jalan di PC kamu sendiri (default-nya `http://localhost:3000`).
+- Browser Source di OBS cukup diarahkan ke URL `http://localhost:3000/...` biasa — OBS bisa load HTTP lokal tanpa masalah, nggak butuh sertifikat apa pun.
+- `bot/bot.js` (bot chat YouTube-nya) juga jalan di PC yang sama dan ngobrol sama `server.js` lewat `ws://localhost:3000/...` — nggak ada yang perlu dibuka ke internet.
+- Cukup jalan pas kamu lagi streaming aja, siklus hidupnya sama kayak OBS. Tutup aja jendela terminal-nya kalau sudah selesai; nggak ada yang perlu "tetap nyala" di background.
+
+## Arsitektur
+
+```
+                 ┌─────────────────────────────────────────┐
+  Live chat      │               server.js                  │
+  YouTube        │  (HTTP polos + 4 namespace WebSocket)    │
+     │           │                                           │
+     │  polling  │   /point-spinner/ws  ──┐                  │
+     ▼           │   /economy/ws         │  baca/tulis       │       Control Panel
+ bot/bot.js ─────┼──►/live-auction/ws    ├─ file JSON ────┐  │        (tab browser)
+ (1 proses       │   /exclusive-         │  lokal di      │  │             │
+  Node)          │    auction/ws       ──┘  data/         │  │   namespace │
+                 │                                        │  │   WS sama   │
+                 └────────────────────────────────────────┼──┘             │
+                                                            │               ▼
+                                               Browser Source OBS
+                                              (overlay.html / winner.html)
+```
+
+`server.js` itu satu-satunya proses yang nyimpen state. `bot/bot.js` cuma client tipis yang nge-polling API live chat YouTube dan nerusin command-nya ke `server.js` lewat WebSocket — jadi kalau kamu restart bot-nya, saldo atau daftar item nggak akan hilang, karena semua itu disimpan di `data/*.json`, bukan di proses bot-nya.
+
+## Mulai cepat
+
+1. `npm install`
+2. `cp .env.example .env` terus isi nilai-nilainya (nama currency, channel ID YouTube kamu, dll) — lihat [docs/CONFIGURATION.md](docs/CONFIGURATION.md) buat tahu fungsi masing-masing.
+3. Bikin project Google Cloud + kredensial OAuth buat bot YouTube-nya — lihat [docs/SETUP.md](docs/SETUP.md) buat panduan lengkapnya (cuma perlu sekali). Terus otorisasi dua akun yang dibutuhin bot:
+   ```
+   node bot/authorize.js main
+   node bot/authorize.js bot
+   ```
+4. Jalanin server-nya: `npm start` (atau `node server.js`)
+5. Di terminal terpisah, jalanin bot-nya: `node bot/bot.js`
+6. Buka control panel-nya di browser buat nambahin hadiah/mulai auction, contohnya `http://localhost:3000/point-spinner/control`
+7. Tambahin URL overlay yang sesuai sebagai Browser Source di OBS, contohnya `http://localhost:3000/point-spinner/overlay` — lihat [docs/CONFIGURATION.md](docs/CONFIGURATION.md) buat daftar URL lengkap dan ukuran yang disarankan.
+
+## Struktur project
+
+```
+server.js                 server utama (file statis, upload, WebSocket)
+bot/
+  bot.js                  bot live chat YouTube
+  authorize.js             helper login OAuth (sekali pakai)
+  economy.js               fungsi bantu currency yang dipakai bot.js
+  wsClients.js              client WebSocket yang dipakai bot.js buat ngobrol ke server.js
+point-spinner/             control panel + overlay + winner Point Spinner
+live-auction/               control panel + overlay Live Auction
+exclusive-auction/          control panel + overlay + winner Exclusive
+                            Auction + test panel yang berdiri sendiri
+data/                       dibuat otomatis saat jalan: saldo, daftar item,
+                            state auction (di-gitignore)
+uploads/                    dibuat otomatis saat jalan: gambar hadiah yang
+                            diupload (di-gitignore)
+docs/
+  SETUP.md                 panduan Google Cloud / YouTube API / OAuth
+  CONFIGURATION.md          referensi .env lengkap, setup OBS, cara ganti
+                            nama currency
+```
+
+## Nggak ada test suite
+
+Nggak ada test suite otomatis atau build step. Kalau mau verifikasi perubahan, jalanin aja server dan bot-nya terus coba langsung (tab browser buat control panel-nya, OBS atau tab browser biasa buat overlay-nya).
+
+# ENGLISH
 
 # Stream Toolkit
 
