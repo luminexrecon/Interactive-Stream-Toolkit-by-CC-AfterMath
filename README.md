@@ -1,3 +1,5 @@
+Support this little streamer :D [Donate here](https://sociabuzz.com/aftermathaoe/tribe)
+
 # Stream Toolkit
 
 A self-hosted set of OBS overlays for a YouTube live stream: a viewer-triggered
@@ -117,4 +119,4 @@ There's no automated test suite or build step. Verify changes by running
 the server and bot and exercising them directly (a browser tab for the
 control panels, OBS or a plain browser tab for the overlays).
 
-Support this little streamer :D [Donate here](https://sociabuzz.com/aftermathaoe/tribe)
+
