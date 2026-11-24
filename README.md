@@ -8,10 +8,6 @@
 
 SC : [YT AfterMath](https://youtube.com/@aftermathaoe)
 
-[![Architecture diagram of luminexrecon/interactive-stream-toolkit-by-cc-aftermath](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath/diagram.png)](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath?utm_source=readme&utm_medium=picture)
-
-[![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath?utm_source=readme&utm_medium=badge)
-
 # INSTRUKSI BERBAHASA INDONESIA
 
 # Stream Toolkit
@@ -37,6 +33,8 @@ Toolkit ini bukan layanan yang perlu di-hosting — nggak ada server yang perlu 
 
 ## Arsitektur
 
+[![Architecture diagram of luminexrecon/interactive-stream-toolkit-by-cc-aftermath](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath/diagram.png)](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath?utm_source=readme&utm_medium=picture)
+
 ```
                  ┌─────────────────────────────────────────┐
   Live chat      │               server.js                  │
@@ -55,6 +53,10 @@ Toolkit ini bukan layanan yang perlu di-hosting — nggak ada server yang perlu 
 ```
 
 `server.js` itu satu-satunya proses yang nyimpen state. `bot/bot.js` cuma client tipis yang nge-polling API live chat YouTube dan nerusin command-nya ke `server.js` lewat WebSocket — jadi kalau kamu restart bot-nya, saldo atau daftar item nggak akan hilang, karena semua itu disimpan di `data/*.json`, bukan di proses bot-nya.
+
+<img width="8985" height="7354" alt="diagram" src="https://github.com/user-attachments/assets/5ac4c9f3-4351-42f4-8b66-7d667cd44c97" />
+
+[![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath?utm_source=readme&utm_medium=badge)
 
 ## Mulai cepat
 
