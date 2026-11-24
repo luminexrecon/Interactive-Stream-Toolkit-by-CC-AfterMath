@@ -9,6 +9,7 @@
 SC : [YT AfterMath](https://youtube.com/@aftermathaoe)
 
 [![Architecture diagram of luminexrecon/interactive-stream-toolkit-by-cc-aftermath](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath/diagram.png)](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath?utm_source=readme&utm_medium=picture)
+
 [![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath?utm_source=readme&utm_medium=badge)
 
 # INSTRUKSI BERBAHASA INDONESIA
