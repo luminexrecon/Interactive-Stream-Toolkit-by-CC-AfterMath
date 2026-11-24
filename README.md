@@ -8,6 +8,8 @@
 
 SC : [YT AfterMath](https://youtube.com/@aftermathaoe)
 
+[![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/luminexrecon/interactive-stream-toolkit-by-cc-aftermath?utm_source=readme&utm_medium=badge)
+
 # INSTRUKSI BERBAHASA INDONESIA
 
 # Stream Toolkit
